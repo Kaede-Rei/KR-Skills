@@ -2,16 +2,17 @@
 
 # KR-Skills
 
-个人工程工作流 Skills 集合
+个人工程与科研工作流 Skills 集合
 
-> 目标是让 Codex 或其他 Agent 在真实项目中更快理解任务边界，用更少步骤完成当前目标，并基于实际证据验证结果
+> 目标是把反复出现的真实工程与科研学习流程沉淀为小而清晰的 Skills，让 Agent 更快理解任务边界，优先基于实际证据工作，并输出可直接使用的结果
 
 </div>
 
-当前仓库优先解决两个高频问题
+当前仓库优先解决三个高频问题
 
 - 不知道该怎么描述仓库分析需求时，先让 Agent 看仓库，再帮助把真正的问题想清楚
 - 已经知道要做什么时，把任务压缩成尽可能少且可验证的实施步骤，再交给 Codex 或其他 Agent 执行
+- 面对复杂英文技术论文时，先用更容易理解的英语保持原始技术含义，再用中文确认和深化理解
 
 ---
 
@@ -21,6 +22,7 @@
 |---|---|---|---|---|
 | `repo-analysis-intake` | 仓库分析需求还很模糊 | `帮我看看这个仓库` `我很久没看了，现在什么情况` | 基于仓库证据收敛分析目标，并继续分析或分流 | [repo-analysis-intake](#repo-analysis-intake) |
 | `mini-step-plan` | 目标已经明确，需要工程实施计划 | `按这个方案给我步骤.md` `给 Codex 一个执行计划` | Compact 或 Full 实施计划，每一步附带可执行 Agent Prompt | [mini-step-plan](#mini-step-plan) |
+| `paper-deep-read` | 英文技术论文难读，需要真正理解而不是只做翻译 | `精读这篇论文` `这段 Method 看不懂` `这个术语是什么意思` | Paper English → Plain English → 中文深解，并区分论文结论与迁移推断 | [paper-deep-read](#paper-deep-read) |
 
 ## 推荐工作流
 
@@ -48,11 +50,31 @@ repo-analysis-intake
  verification-before-completion  如果可用
 ```
 
-两个 Skill 不要求每次串联
+工程类 Skill 不要求每次串联
 
 目标已经明确时可以直接使用 `mini-step-plan`
 
 只是想恢复项目状态或检查现有实现时，可以只使用 `repo-analysis-intake`
+
+论文学习走另一条独立链路
+
+```text
+已确定要读的英文论文
+        ↓
+paper-deep-read
+        ↓
+Paper idea / Paper English
+        ↓
+Plain English
+        ↓
+中文深解 + Technical Vocabulary
+        ↓
+形成明确的研究或复现想法
+        ↓
+mini-step-plan  如果进入工程实施
+```
+
+`paper-deep-read` 不负责把论文搜索、日报筛选、影响因子核验和深度阅读全部混成一个大 Skill
 
 ---
 
@@ -247,6 +269,154 @@ mini-step-plan/
 
 ---
 
+## paper-deep-read
+
+> Understand the paper through simpler English first, then use Chinese to verify and deepen the technical idea
+
+用于已经确定论文或具体阅读目标，希望真正读懂英文技术内容而不是只得到中文摘要的场景
+
+例如
+
+```text
+这篇论文帮我完整精读
+英文多一点，用更通俗的英语解释，再用中文帮我理解
+```
+
+```text
+Method 这一节我看不懂
+按 Paper English -> Plain English -> 中文深解 来讲
+```
+
+```text
+contact-consistent equilibrium 到底是什么意思
+```
+
+### 阅读模式
+
+| Mode | 使用场景 | 默认重点 |
+|---|---|---|
+| `QUICK` | 快速判断论文核心内容 | Problem / Core idea / Method map / Main evidence |
+| `SECTION` | 精读 Abstract Method Experiment 等单个章节 | 只深入目标章节和必要上下文 |
+| `DEEP` | 完整精读 | Abstract → Method → Equations → Experiments → Limitations |
+| `TARGETED` | 单个术语 句子 方程 图或 claim | 直接解决当前卡点，不重讲整篇 |
+
+### 核心阅读链
+
+重要技术内容优先使用
+
+```text
+Paper idea
+    ↓
+Plain English
+    ↓
+中文深解
+```
+
+默认约 55% 到 65% 英文，35% 到 45% 中文，但不是机械计算字数
+
+英文主要负责准确解释论文 claim、method、technical vocabulary 和 sentence logic
+
+中文主要负责技术直觉、数学和控制含义、易错点以及与已有知识的连接
+
+### Claim boundary
+
+必须区分
+
+```text
+Paper claim
+论文明确提出或实验直接支持
+
+Interpretation
+为了帮助理解进行的解释
+
+Inference
+根据论文进一步得到的合理推断
+
+Project connection
+迁移到其他项目后的新想法
+```
+
+不能把对农业机器人、机械臂或其他项目的迁移设想写成作者已经验证的结果
+
+### Technical Vocabulary
+
+不生成大而泛的中英单词表
+
+优先解释在当前论文里真正有技术含义的表达，例如
+
+- structured action representation
+- contact-consistent equilibrium
+- direction-dependent stiffness
+- demonstration manifold
+- motion field
+
+每个重要术语关注
+
+```text
+Meaning in this paper
+      ↓
+Plain-English definition
+      ↓
+中文概念
+      ↓
+Why the wording matters
+      ↓
+Common misunderstanding
+```
+
+### Sentence Clinic
+
+只对真正阻碍理解的复杂句子使用
+
+关注
+
+- Main subject
+- Main verb
+- Main complement
+- Important modifier
+- Logical connector
+- Plain English rewrite
+
+不是把整篇论文变成英语语法课
+
+### Equation and experiment
+
+公式不只解释符号，还需要连接数学含义、物理直觉、边界情况和论文方法
+
+实验则至少区分
+
+```text
+What hypothesis is being tested
+What baseline is used
+What metric is measured
+What conclusion is actually supported
+```
+
+避免看到某个指标更高就直接推导成方法在所有维度都更好
+
+### Research connection
+
+默认最多给三个真正有依据的连接，并标记为
+
+- `Directly reusable`
+- `Adaptable`
+- `Research inspiration`
+
+当阅读最终形成明确的复现或集成任务时，再交给 `mini-step-plan`
+
+目录
+
+```text
+paper-deep-read/
+├── SKILL.md
+├── READING_TEMPLATE.md
+├── TEST_CASES.md
+└── agents/
+    └── openai.yaml
+```
+
+---
+
 ## 使用示例
 
 ### 只知道要分析仓库
@@ -291,6 +461,18 @@ Agent 应先做足以暴露关键差异的比较，再决定继续 correctness r
 
 已经完成的能力必须进入 baseline，不能重新计算为实施步骤
 
+### 精读英文技术论文
+
+```text
+使用 paper-deep-read
+
+请精读这篇论文的 Method
+英语多一点，先用简单英语解释，再用中文深化
+特别解释 action representation 和 impedance 部分
+```
+
+Agent 应优先回到论文原文，区分 Paper claim、Interpretation 和 Project connection，并只对真正困难的术语、句子和公式做深入拆解
+
 ---
 
 ## 安装与使用
@@ -332,8 +514,14 @@ KR-Skills/
 │   ├── TEST_CASES.md
 │   └── agents/
 │       └── openai.yaml
-└── repo-analysis-intake/
+├── repo-analysis-intake/
+│   ├── SKILL.md
+│   ├── TEST_CASES.md
+│   └── agents/
+│       └── openai.yaml
+└── paper-deep-read/
     ├── SKILL.md
+    ├── READING_TEMPLATE.md
     ├── TEST_CASES.md
     └── agents/
         └── openai.yaml
@@ -341,6 +529,6 @@ KR-Skills/
 
 ## 当前方向
 
-这个仓库优先服务真实工程协作，而不是建设一个大而全的 Skill 集合
+这个仓库优先服务真实工程、科研阅读与协作工作流，而不是建设一个大而全的 Skill 集合
 
 后续新增 Skill 时优先从反复出现的真实工作流问题中抽取，而不是为了补齐分类而增加 Skill
