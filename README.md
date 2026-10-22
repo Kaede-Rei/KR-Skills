@@ -8,11 +8,12 @@
 
 </div>
 
-当前仓库优先解决三个高频问题
+当前仓库优先解决四个高频问题
 
 - 不知道该怎么描述仓库分析需求时，先让 Agent 看仓库，再帮助把真正的问题想清楚
 - 已经知道要做什么时，把任务压缩成尽可能少且可验证的实施步骤，再交给 Codex 或其他 Agent 执行
 - 面对复杂英文技术论文时，先用更容易理解的英语保持原始技术含义，再用中文确认和深化理解
+- 向导师汇报或请教时，把口语草稿整理成礼貌自然的消息，同时保留真实进度、不确定性和个人时间边界
 
 ---
 
@@ -23,6 +24,7 @@
 | `repo-analysis-intake` | 仓库分析需求还很模糊 | `帮我看看这个仓库` `我很久没看了，现在什么情况` | 基于仓库证据收敛分析目标，并继续分析或分流 | [repo-analysis-intake](#repo-analysis-intake) |
 | `mini-step-plan` | 目标已经明确，需要工程实施计划 | `按这个方案给我步骤.md` `给 Codex 一个执行计划` | Compact 或 Full 实施计划，每一步附带可执行 Agent Prompt | [mini-step-plan](#mini-step-plan) |
 | `paper-deep-read` | 英文技术论文难读，需要真正理解而不是只做翻译 | `精读这篇论文` `这段 Method 看不懂` `这个术语是什么意思` | Paper English → Plain English → 中文深解，并区分论文结论与迁移推断 | [paper-deep-read](#paper-deep-read) |
+| `advisor-message` | 给导师发消息时，希望礼貌清楚地表达原意 | `这段发老师怎么说` `给导师汇报进度` `帮我礼貌地问一下` | 可直接发送的消息或邮件，保留事实、研究不确定性和个人边界 | [advisor-message](#advisor-message) |
 
 ## 推荐工作流
 
@@ -75,6 +77,8 @@ mini-step-plan  如果进入工程实施
 ```
 
 `paper-deep-read` 不负责把论文搜索、日报筛选、影响因子核验和深度阅读全部混成一个大 Skill
+
+向导师沟通可以独立使用 `advisor-message`：提供草稿或要点，即可得到适合发送的文字；不需要先运行论文阅读或工程规划 Skill
 
 ---
 
@@ -417,6 +421,43 @@ paper-deep-read/
 
 ---
 
+## advisor-message
+
+> Keep the student's meaning, facts, uncertainty, and boundaries intact
+
+用于学生把口语草稿或零散要点整理成适合发给导师、任课教师的消息
+
+常见场景
+
+- 汇报科研进度和暂未确定的实验结果
+- 请教具体问题、请求论文或材料反馈
+- 约时间、说明延期、表达不同意见或时间限制
+
+默认只给一版可以直接发送的正文，渠道不明时按简短中文聊天消息处理
+
+明确要求邮件时，再按需要给主题、称呼、正文和署名
+
+### 表达边界
+
+- 礼貌、自然、清楚，不套用体制内汇报风或过度谦卑的敬辞
+- 保留真实进度，不把未开始写成正在推进，不把未完成写成基本完成
+- 保留“可能”“初步”“尚未验证”等研究不确定性
+- 不新增实验结果、理由、交付期限、行动承诺或可用时间
+- 尊重学生的异议和时间边界，不自动改成无条件服从
+- 已有信息足够时直接改写，不先询问专业、年级或导师性格
+
+目录
+
+```text
+advisor-message/
+├── SKILL.md
+├── TEST_CASES.md
+└── agents/
+    └── openai.yaml
+```
+
+---
+
 ## 使用示例
 
 ### 只知道要分析仓库
@@ -473,6 +514,20 @@ Agent 应先做足以暴露关键差异的比较，再决定继续 correctness r
 
 Agent 应优先回到论文原文，区分 Paper claim、Interpretation 和 Project connection，并只对真正困难的术语、句子和公式做深入拆解
 
+### 给导师汇报并请教下一步
+
+```text
+使用 $advisor-message
+
+帮我改成发给导师的微信，礼貌自然就行：
+
+老师，baseline 跑通了，新方法只测了两个随机种子
+结果有点波动，还不确定提升稳不稳定
+您看先补种子还是先查方差？
+```
+
+Agent 应保留实验条件和不确定性，明确请教下一步，不写成已证明有效，也不擅自承诺补实验的期限
+
 ---
 
 ## 安装与使用
@@ -519,9 +574,14 @@ KR-Skills/
 │   ├── TEST_CASES.md
 │   └── agents/
 │       └── openai.yaml
-└── paper-deep-read/
+├── paper-deep-read/
+│   ├── SKILL.md
+│   ├── READING_TEMPLATE.md
+│   ├── TEST_CASES.md
+│   └── agents/
+│       └── openai.yaml
+└── advisor-message/
     ├── SKILL.md
-    ├── READING_TEMPLATE.md
     ├── TEST_CASES.md
     └── agents/
         └── openai.yaml
