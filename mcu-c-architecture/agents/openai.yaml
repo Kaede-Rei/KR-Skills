@@ -1,0 +1,3 @@
+interface:
+  display_name: "MCU C 架构设计"
+  short_description: "按个人 MCU C 规范设计与评审模块边界、设备接口及任务流"
