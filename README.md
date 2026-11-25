@@ -8,12 +8,13 @@
 
 </div>
 
-当前仓库优先解决四个高频问题
+当前仓库优先解决五个高频问题
 
 - 不知道该怎么描述仓库分析需求时，先让 Agent 看仓库，再帮助把真正的问题想清楚
 - 已经知道要做什么时，把任务压缩成尽可能少且可验证的实施步骤，再交给 Codex 或其他 Agent 执行
 - 面对复杂英文技术论文时，先用更容易理解的英语保持原始技术含义，再用中文确认和深化理解
 - 向导师汇报或请教时，把口语草稿整理成礼貌自然的消息，同时保留真实进度、不确定性和个人时间边界
+- 优化机器人桌面软件时，沿用现有系统整理前端层级、桌面交互和有目的的动效
 
 ---
 
@@ -25,6 +26,7 @@
 | `mini-step-plan` | 目标已经明确，需要工程实施计划 | `按这个方案给我步骤.md` `给 Codex 一个执行计划` | Compact 或 Full 实施计划，每一步附带可执行 Agent Prompt | [mini-step-plan](#mini-step-plan) |
 | `paper-deep-read` | 英文技术论文难读，需要真正理解而不是只做翻译 | `精读这篇论文` `这段 Method 看不懂` `这个术语是什么意思` | Paper English → Plain English → 中文深解，并区分论文结论与迁移推断 | [paper-deep-read](#paper-deep-read) |
 | `advisor-message` | 给导师发消息时，希望礼貌清楚地表达原意 | `这段发老师怎么说` `给导师汇报进度` `帮我礼貌地问一下` | 可直接发送的消息或邮件，保留事实、研究不确定性和个人边界 | [advisor-message](#advisor-message) |
+| `robot-desktop-ui` | 机器人桌面工作台需要双主题视觉、工程数据与交互优化 | `优化 ROS 2 工作台前端` `动效舒适但单调` `借鉴 Apple 设计` | 森林绿双主题、工程图表与资产规范，保留连续交互并区分技能与应用验证 | [robot-desktop-ui](#robot-desktop-ui) |
 
 ## 推荐工作流
 
@@ -530,6 +532,22 @@ Agent 应保留实验条件和不确定性，明确请教下一步，不写成�
 
 ---
 
+## robot-desktop-ui
+
+以 SerialArm-Core 已确认的设计为基线，用于机器人桌面工作台的设计、实现、重构与评审，适配 Electron、原生 Web UI、Qt 等实现
+
+V2 采用 Kudu Calm Control 森林绿 Light / Dark、Proof 暖白窗口参考、真实 Maple CN Italic 与可选编程连字；Reference 紫色与 Success 分离，图表和三维保留独立工程语义
+
+融合 Taste 的页面构图、确定性布局选择、组件与视觉资产组织、工程视觉焦点和截图质量门槛；随包提供主题 CSS、离线预览和原创工程 SVG；统一页面和子页、四象限操作栏、折叠与滚动、菜单及按钮锚定状态反馈
+
+使用一个技能入口和按需参考模块，覆盖模型预加载与跨页保留、隐藏暂停、渲染性能、真实机器人状态、串口连接、界面文案和无障碍；逐项记录 Emil Kowalski 上游 19 个 skills 的特化去向，无需另行安装上游技能或新的界面库
+
+只读评审与实现遵从当前请求；局部 UI 工作不扩展机器人业务流程或实体操作；继承既定视觉与交互，按实际改动验证
+
+本次交付与验证：[V2_UPGRADE_REPORT.md](robot-desktop-ui/V2_UPGRADE_REPORT.md)；主题：[theme-guidelines.md](robot-desktop-ui/references/theme-guidelines.md)；[离线预览](robot-desktop-ui/assets/theme-previews/index.html)
+
+入口：[SKILL.md](robot-desktop-ui/SKILL.md)；行为场景：[TEST_CASES.md](robot-desktop-ui/TEST_CASES.md)；[来源与覆盖](robot-desktop-ui/references/sources.md)；[第三方许可](robot-desktop-ui/THIRD_PARTY_NOTICES.md)
+
 ## 安装与使用
 
 每个 Skill 目录都是独立单元
@@ -580,11 +598,42 @@ KR-Skills/
 │   ├── TEST_CASES.md
 │   └── agents/
 │       └── openai.yaml
-└── advisor-message/
+├── advisor-message/
+│   ├── SKILL.md
+│   ├── TEST_CASES.md
+│   └── agents/
+│       └── openai.yaml
+└── robot-desktop-ui/
     ├── SKILL.md
     ├── TEST_CASES.md
-    └── agents/
-        └── openai.yaml
+    ├── THIRD_PARTY_NOTICES.md
+    ├── V2_UPGRADE_REPORT.md
+    ├── assets/
+    │   ├── theme/calm-control.css
+    │   ├── theme-previews/index.html
+    │   ├── icons/joint-axis.svg
+    │   └── diagrams/coordinate-frame.svg
+    ├── agents/
+    │   └── openai.yaml
+    └── references/
+        ├── design-system.md
+        ├── theme-guidelines.md
+        ├── art-direction.md
+        ├── layout-recipes.md
+        ├── component-library.md
+        ├── visual-assets.md
+        ├── visual-moments.md
+        ├── visualization-theme.md
+        ├── iconography-and-svg.md
+        ├── layout-and-navigation.md
+        ├── components-and-feedback.md
+        ├── motion-and-scroll.md
+        ├── robot-state-and-connection.md
+        ├── model-lifecycle-and-performance.md
+        ├── copy-and-accessibility.md
+        ├── workflows.md
+        ├── verification.md
+        └── sources.md
 ```
 
 ## 当前方向

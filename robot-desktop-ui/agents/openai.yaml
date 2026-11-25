@@ -1,0 +1,4 @@
+interface:
+  display_name: "Robot Desktop UI"
+  short_description: "森林绿双主题的机器人桌面视觉、工程图表、模型与连续交互设计"
+  default_prompt: "使用 $robot-desktop-ui，按 V2 双主题与工程语义完成这次机器人桌面界面工作，保留现有交互并验证相关视觉和行为"

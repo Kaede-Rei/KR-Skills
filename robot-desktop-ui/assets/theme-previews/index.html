@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Robot Desktop UI V2 Theme Preview</title><link rel="stylesheet" href="../theme/calm-control.css"><style>
+* { box-sizing: border-box; } body { margin: 0; font: 14px/1.5 system-ui, sans-serif; background: #ddd9cf; }
+article { color:var(--text-primary); background:var(--page-bg); padding:24px; min-width:0; container-type:inline-size; }
+.chrome { background:var(--window-chrome); border:1px solid var(--border-medium); padding:10px 16px; border-radius:10px 10px 0 0; display:flex; justify-content:space-between; gap:12px; }
+.shell { display:grid; grid-template-columns:180px minmax(0,1fr); border:1px solid var(--border-medium); }
+nav { padding:16px; background:var(--sidebar-bg); border-right:1px solid var(--border-default); }
+nav div { margin:4px 0; padding:8px; border-radius:6px; } .current { background:var(--nav-active-bg); color:var(--nav-active-fg); }
+main { padding:20px; min-width:0; } h1,h2,p { margin:0 0 12px; } h1{font-size:24px}h2{font-size:16px}
+.meta { color:var(--text-muted); } .toolbar,.states,.legend { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0; align-items:center; }
+button { font:inherit; border:1px solid var(--control-border); border-radius:8px; padding:7px 12px; color:var(--text-primary); background:var(--surface); }
+button:focus-visible,.focus { outline:2px solid var(--focus-ring); outline-offset:3px; }
+.primary { background:var(--brand-solid); color:var(--brand-ink); border-color:var(--brand-solid); }
+.primary:hover,.primary.hover { background:var(--brand-hover); } .primary:active,.primary.pressed { background:var(--brand-active); }
+button:disabled { opacity:.45; } .accent { background:var(--accent);color:var(--text-on-accent);border-color:var(--accent); }
+.state { display:inline-flex;gap:6px;align-items:center;border:1px solid var(--state-border);background:var(--state-bg);color:var(--state-fg);padding:5px 9px;border-radius:6px; }
+.panels { display:grid; grid-template-columns:minmax(0,1fr) 220px; gap:16px; } .panel { background:var(--surface);border:1px solid var(--border-medium);border-radius:10px;padding:16px;min-width:0; }
+.chart { width:100%; display:block; background:var(--viz-canvas); border-radius:8px; } .chart text { fill:var(--viz-axis);font-size:14px; }
+.series{fill:none;stroke-width:2.5}.grid{stroke:var(--viz-grid);stroke-width:1}.axis{stroke:var(--viz-axis);stroke-width:1}
+.legend span { display:inline-flex;align-items:center;gap:5px; } .legend svg { width:32px;height:12px; }
+input { background:var(--surface);color:var(--text-primary);border:1px solid var(--control-border);border-radius:5px;font:inherit;width:100%;padding:7px; }
+.diagram { color:var(--text-primary);background:var(--viz-canvas);border-radius:8px;width:100%;height:150px; }
+.compact main { padding:14px; }.compact .panel {padding:12px}.compact button {padding:4px 10px;font-size:13px}.compact .panels{gap:12px}
+@container(max-width:1000px) { .shell{grid-template-columns:1fr} nav{display:flex;flex-wrap:wrap;gap:4px;border-right:0;border-bottom:1px solid var(--border-default)} }
+@media(min-width:1600px) { body{display:grid;grid-template-columns:1fr 1fr} }
+@media(max-width:760px) { article{padding:12px}.shell{grid-template-columns:1fr} nav{display:flex;flex-wrap:wrap;gap:4px;border-right:0}.panels{grid-template-columns:1fr}.chrome{flex-wrap:wrap} }
+</style><body><article data-theme="light" class="default"><header class="chrome"><b>Robot Desktop UI V2</b><span>Light · Default</span></header><div class="shell"><nav aria-label="light 示例导航"><div>准备状态</div><div class="current" aria-current="page">遥测工作区</div><div>参数配置</div><div>诊断记录</div></nav><main><h1>关节角遥测</h1><p class="meta">静态合成数据 · 主题与工程语义预览 · 未连接设备</p><div class="toolbar"><button class="primary">主操作</button><button class="primary hover">Hover</button><button class="primary pressed">Pressed</button><button class="focus">Focus</button><button disabled>Disabled</button><button class="accent">辅助强调</button></div><div class="states"><span class="state" style="--state-fg:var(--success-foreground);--state-bg:var(--success-surface);--state-border:var(--success-border)"><b aria-hidden="true">✓</b>验证通过</span><span class="state" style="--state-fg:var(--warning-foreground);--state-bg:var(--warning-surface);--state-border:var(--warning-border)"><b aria-hidden="true">△</b>反馈过期</span><span class="state" style="--state-fg:var(--error-foreground);--state-bg:var(--error-surface);--state-border:var(--error-border)"><b aria-hidden="true">×</b>图形故障</span><span class="state" style="--state-fg:var(--info-foreground);--state-bg:var(--info-surface);--state-border:var(--info-border)"><b aria-hidden="true">i</b>尚未连接</span><span class="state" style="--state-fg:var(--reference-foreground);--state-bg:var(--reference-surface);--state-border:var(--reference-border)"><b aria-hidden="true">◇</b>参考数据</span></div><div class="panels"><section class="panel"><h2>关节角 θ / °</h2><svg class="chart" viewBox="0 0 540 240" role="img" aria-label="合成关节角曲线，实测、目标、估计和参考各有不同线型与标记">
+<path class="grid" d="M48 50H510 M48 95H510 M48 140H510 M48 185H510 M160 35V200 M280 35V200 M400 35V200"/>
+<path class="axis" fill="none" d="M48 35V200H510"/>
+<text x="8" y="22">θ / °</text><text x="22" y="54">30</text><text x="22" y="144">10</text><text x="46" y="220">0</text><text x="273" y="220">5</text><text x="466" y="220">t / s</text>
+<path class="series" style="stroke:var(--viz-target)" stroke-dasharray="8 4" d="M48 180L160 70H510"/>
+<path class="series" style="stroke:var(--viz-estimated)" stroke-dasharray="6 3 2 3" d="M48 182C140 165 160 78 240 75S400 78 510 73"/>
+<path class="series" style="stroke:var(--viz-reference)" stroke-dasharray="3 4" d="M48 184C130 150 170 90 250 88S410 90 510 87"/>
+<path class="series" style="stroke:var(--viz-measured)" d="M48 185C130 175 160 75 240 80S390 80 510 76"/>
+<circle cx="240" cy="80" r="4" style="fill:var(--viz-measured)"/><rect x="396" y="66" width="8" height="8" style="fill:var(--viz-target)"/><path d="M280 72l5 9h-10z" style="fill:var(--viz-estimated)"/><path d="M350 83l5 5-5 5-5-5z" style="fill:var(--viz-reference)"/>
+</svg><div class="legend"><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-measured)" stroke-width="2" stroke-dasharray=""/></svg>● 实测</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-target)" stroke-width="2" stroke-dasharray="8 4"/></svg>■ 目标</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-estimated)" stroke-width="2" stroke-dasharray="6 3 2 3"/></svg>▲ 估计</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-reference)" stroke-width="2" stroke-dasharray="3 4"/></svg>◇ 参考</span></div><p class="meta">图例保持数据角色；Reference 与 Success 分开编码</p></section><section class="panel"><h2>工程坐标示意</h2><svg class="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" width="180" height="160" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="XYZ 坐标系示意">
+  <title>XYZ 坐标系示意</title>
+  <desc>原点 O 发出带箭头的 X 红轴、Y 绿轴与 Z 蓝轴；仅说明坐标方向语义，不代表机器人实际安装姿态或实时数据</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <g stroke="currentColor" stroke-width="5" opacity="0.35">
+    <path d="M76 104 150 128m-8-8 8 8-11 1M76 104l64-50m-11 2 11-2-4 10M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <g stroke-width="2.5">
+    <path stroke="#ef4444" d="M76 104 150 128m-8-8 8 8-11 1"/>
+    <path stroke="#22c55e" d="m76 104 64-50m-11 2 11-2-4 10"/>
+    <path stroke="#3b82f6" d="M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <circle cx="76" cy="104" r="3.5" fill="currentColor"/>
+  <g fill="currentColor" font-family="sans-serif" font-size="14" font-weight="600">
+    <text x="157" y="134">X</text>
+    <text x="146" y="49">Y</text>
+    <text x="87" y="23">Z</text>
+    <text x="58" y="121">O</text>
+  </g>
+</svg>
+<label>目标角度 / ° <input value="24.00" readonly></label><p class="meta">主题切换不改变轴语义</p><div class="legend"><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+16px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+18px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+20px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+24px</span></div></section></div></main></div></article><article data-theme="dark" class="compact"><header class="chrome"><b>Robot Desktop UI V2</b><span>Dark · Compact</span></header><div class="shell"><nav aria-label="dark 示例导航"><div>准备状态</div><div class="current" aria-current="page">遥测工作区</div><div>参数配置</div><div>诊断记录</div></nav><main><h1>关节角遥测</h1><p class="meta">静态合成数据 · 主题与工程语义预览 · 未连接设备</p><div class="toolbar"><button class="primary">主操作</button><button class="primary hover">Hover</button><button class="primary pressed">Pressed</button><button class="focus">Focus</button><button disabled>Disabled</button><button class="accent">辅助强调</button></div><div class="states"><span class="state" style="--state-fg:var(--success-foreground);--state-bg:var(--success-surface);--state-border:var(--success-border)"><b aria-hidden="true">✓</b>验证通过</span><span class="state" style="--state-fg:var(--warning-foreground);--state-bg:var(--warning-surface);--state-border:var(--warning-border)"><b aria-hidden="true">△</b>反馈过期</span><span class="state" style="--state-fg:var(--error-foreground);--state-bg:var(--error-surface);--state-border:var(--error-border)"><b aria-hidden="true">×</b>图形故障</span><span class="state" style="--state-fg:var(--info-foreground);--state-bg:var(--info-surface);--state-border:var(--info-border)"><b aria-hidden="true">i</b>尚未连接</span><span class="state" style="--state-fg:var(--reference-foreground);--state-bg:var(--reference-surface);--state-border:var(--reference-border)"><b aria-hidden="true">◇</b>参考数据</span></div><div class="panels"><section class="panel"><h2>关节角 θ / °</h2><svg class="chart" viewBox="0 0 540 240" role="img" aria-label="合成关节角曲线，实测、目标、估计和参考各有不同线型与标记">
+<path class="grid" d="M48 50H510 M48 95H510 M48 140H510 M48 185H510 M160 35V200 M280 35V200 M400 35V200"/>
+<path class="axis" fill="none" d="M48 35V200H510"/>
+<text x="8" y="22">θ / °</text><text x="22" y="54">30</text><text x="22" y="144">10</text><text x="46" y="220">0</text><text x="273" y="220">5</text><text x="466" y="220">t / s</text>
+<path class="series" style="stroke:var(--viz-target)" stroke-dasharray="8 4" d="M48 180L160 70H510"/>
+<path class="series" style="stroke:var(--viz-estimated)" stroke-dasharray="6 3 2 3" d="M48 182C140 165 160 78 240 75S400 78 510 73"/>
+<path class="series" style="stroke:var(--viz-reference)" stroke-dasharray="3 4" d="M48 184C130 150 170 90 250 88S410 90 510 87"/>
+<path class="series" style="stroke:var(--viz-measured)" d="M48 185C130 175 160 75 240 80S390 80 510 76"/>
+<circle cx="240" cy="80" r="4" style="fill:var(--viz-measured)"/><rect x="396" y="66" width="8" height="8" style="fill:var(--viz-target)"/><path d="M280 72l5 9h-10z" style="fill:var(--viz-estimated)"/><path d="M350 83l5 5-5 5-5-5z" style="fill:var(--viz-reference)"/>
+</svg><div class="legend"><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-measured)" stroke-width="2" stroke-dasharray=""/></svg>● 实测</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-target)" stroke-width="2" stroke-dasharray="8 4"/></svg>■ 目标</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-estimated)" stroke-width="2" stroke-dasharray="6 3 2 3"/></svg>▲ 估计</span><span><svg aria-hidden="true"><path d="M0 6H32" stroke="var(--viz-reference)" stroke-width="2" stroke-dasharray="3 4"/></svg>◇ 参考</span></div><p class="meta">图例保持数据角色；Reference 与 Success 分开编码</p></section><section class="panel"><h2>工程坐标示意</h2><svg class="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" width="180" height="160" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="XYZ 坐标系示意">
+  <title>XYZ 坐标系示意</title>
+  <desc>原点 O 发出带箭头的 X 红轴、Y 绿轴与 Z 蓝轴；仅说明坐标方向语义，不代表机器人实际安装姿态或实时数据</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <g stroke="currentColor" stroke-width="5" opacity="0.35">
+    <path d="M76 104 150 128m-8-8 8 8-11 1M76 104l64-50m-11 2 11-2-4 10M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <g stroke-width="2.5">
+    <path stroke="#ef4444" d="M76 104 150 128m-8-8 8 8-11 1"/>
+    <path stroke="#22c55e" d="m76 104 64-50m-11 2 11-2-4 10"/>
+    <path stroke="#3b82f6" d="M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <circle cx="76" cy="104" r="3.5" fill="currentColor"/>
+  <g fill="currentColor" font-family="sans-serif" font-size="14" font-weight="600">
+    <text x="157" y="134">X</text>
+    <text x="146" y="49">Y</text>
+    <text x="87" y="23">Z</text>
+    <text x="58" y="121">O</text>
+  </g>
+</svg>
+<label>目标角度 / ° <input value="24.00" readonly></label><p class="meta">主题切换不改变轴语义</p><div class="legend"><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+16px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+18px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+20px</span><span style="display:inline-flex;align-items:center;gap:5px"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="关节旋转轴示意">
+  <title>关节旋转轴示意</title>
+  <desc>虚线表示关节轴，圆和弧形箭头表示绕轴旋转；这是抽象示意，不是实际硬件标识</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <path d="M12 2.75v4.5m0 9.5v4.5" stroke-dasharray="1.5 2"/>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M5.1 8.9a7.6 7.6 0 0 1 13.7 6.2M18.8 15.1l-3.1-1.2m3.1 1.2 1.2-3.1"/>
+</svg>
+24px</span></div></section></div></main></div></article></body></html>

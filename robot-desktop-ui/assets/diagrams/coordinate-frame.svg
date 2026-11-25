@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" width="180" height="160" fill="none" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="XYZ 坐标系示意">
+  <title>XYZ 坐标系示意</title>
+  <desc>原点 O 发出带箭头的 X 红轴、Y 绿轴与 Z 蓝轴；仅说明坐标方向语义，不代表机器人实际安装姿态或实时数据</desc>
+  <!-- Original asset for Robot Desktop UI, 2026-11-25. License: CC0-1.0. -->
+  <g stroke="currentColor" stroke-width="5" opacity="0.35">
+    <path d="M76 104 150 128m-8-8 8 8-11 1M76 104l64-50m-11 2 11-2-4 10M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <g stroke-width="2.5">
+    <path stroke="#ef4444" d="M76 104 150 128m-8-8 8 8-11 1"/>
+    <path stroke="#22c55e" d="m76 104 64-50m-11 2 11-2-4 10"/>
+    <path stroke="#3b82f6" d="M76 104V20m-5 9 5-9 5 9"/>
+  </g>
+  <circle cx="76" cy="104" r="3.5" fill="currentColor"/>
+  <g fill="currentColor" font-family="sans-serif" font-size="14" font-weight="600">
+    <text x="157" y="134">X</text>
+    <text x="146" y="49">Y</text>
+    <text x="87" y="23">Z</text>
+    <text x="58" y="121">O</text>
+  </g>
+</svg>
